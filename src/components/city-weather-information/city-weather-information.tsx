@@ -17,7 +17,7 @@ export const CityWeatherInformation = ({ city }: CityPageParams) => {
   return (
     <section>
       <h3>Temperature</h3>
-      {weatherInformation?.current.temperature}
+      {weatherInformation?.current?.temperature}
     </section>
   );
 };

@@ -6,6 +6,7 @@ export interface ReduxActionType<T> {
 export enum ActionTypes {
   UPDATE_LARGEST_CITIES = "UPDATE_LARGEST_CITIES",
   UPDATE_FAVORITE_CITIES = "UPDATE_FAVORITE_CITIES",
+  UPDATE_NOTE = "UPDATE_NOTE",
 }
 
 export interface LargestCityReducer {
@@ -18,7 +19,20 @@ export interface FavoriteCityReducer {
   isLoading: boolean;
 }
 
+export interface NoteReducer {
+  notes: NoteType[];
+  isLoading: boolean;
+}
+
+export interface NoteType {
+  id: number;
+  city: string;
+  note: string;
+  createdAt: string;
+  updatedAt: string;
+}
 export interface RootStoreType {
   largestCities: LargestCityReducer;
   favoriteCities: FavoriteCityReducer;
+  notes: NoteReducer;
 }

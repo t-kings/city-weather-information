@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import { largestCities } from "./largest-cities.reducer";
 import { favoriteCities } from "./favorite-cities.reducer";
+import { largestCities } from "./largest-cities.reducer";
 
 const reducers = {
   largestCities,
