@@ -1,7 +1,12 @@
+import { ErrorBoundary } from "./containers";
 import { PageRoutes } from "./routes";
 
 function App() {
-  return <PageRoutes />;
+  return (
+    <ErrorBoundary>
+      <PageRoutes />
+    </ErrorBoundary>
+  );
 }
 
 export default App;
