@@ -5,11 +5,8 @@
  * TODO: Users should also be able to edit and remove notes.
  */
 
-import { useParams } from "react-router";
 import { CityPageParams } from "../../types";
 
-export const Notes = () => {
-  const { city } = useParams<CityPageParams>();
-
+export const Notes = ({ city }: CityPageParams) => {
   return <h1>Notes for {city}</h1>;
 };

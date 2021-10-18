@@ -1,11 +1,10 @@
 /**
  *
  * @description  Displays weather information of a city
- * TODO: display weather information of a city
  */
 
 import { useParams } from "react-router";
-import { Notes, SearchCities } from "../../components";
+import { CityWeatherInformation, Notes, SearchCities } from "../../components";
 import { CityPageParams } from "../../types";
 
 export const WeatherInformation = () => {
@@ -13,7 +12,8 @@ export const WeatherInformation = () => {
   return (
     <>
       <h1>{city} Weather Information</h1>
-      <Notes />
+      <CityWeatherInformation city={city} />
+      <Notes city={city} />
       <SearchCities />
     </>
   );
