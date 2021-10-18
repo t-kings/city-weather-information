@@ -1,0 +1,4 @@
+- Except for the “search” feature, the app should retain basic functionality offline. The most up-to-date information should be cached and persist in local storage.
+- Include unit testing for applicable functionality.
+- Add styling
+- Include screenshots and documentation in a README.md file.
