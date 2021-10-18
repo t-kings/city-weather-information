@@ -14,3 +14,14 @@ export const sortObjectArrayAlphabetically = (
 ) => {
   return array.sort((a, b) => a[field].localeCompare(b[field]));
 };
+
+/**
+ *
+ * @param cities
+ * @returns
+ */
+export const sortArrayAlphabetically = (cities: string[]) => {
+  console.log(cities);
+
+  return cities.sort((a, b) => a.localeCompare(b));
+};

@@ -5,6 +5,7 @@ export interface ReduxActionType<T> {
 
 export enum ActionTypes {
   UPDATE_LARGEST_CITIES = "UPDATE_LARGEST_CITIES",
+  UPDATE_FAVORITE_CITIES = "UPDATE_FAVORITE_CITIES",
 }
 
 export interface LargestCityReducer {
@@ -12,6 +13,12 @@ export interface LargestCityReducer {
   isLoading: boolean;
 }
 
+export interface FavoriteCityReducer {
+  cities: string[];
+  isLoading: boolean;
+}
+
 export interface RootStoreType {
   largestCities: LargestCityReducer;
+  favoriteCities: FavoriteCityReducer;
 }

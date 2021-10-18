@@ -1,20 +1,20 @@
 /**
  *
  * @description Largest Cities component
- * TODO: Display add to favorite cities button
  * TODO: Persist clearing on refresh
  */
 
 import { COMPONENT_IDS } from "../../constants";
 import { connect, ConnectedProps } from "react-redux";
 import { useEffect, useState } from "react";
-import { getLargestCities } from "../../store";
+import { addToFavoriteCity, getLargestCities } from "../../store";
 import { RootStoreType } from "../../store/types";
 import { sortObjectArrayAlphabetically } from "../../helpers";
 
 const LargestCities_ = ({
   largestCities,
   getLargestCities,
+  addFavoriteCity,
 }: PropsFromRedux) => {
   const [cities, setCities] = useState<any>([]);
 
@@ -35,6 +35,10 @@ const LargestCities_ = ({
   const restore = () => {
     setCities(largestCities);
   };
+
+  const addToFavorite = (city: string) => {
+    addFavoriteCity(city);
+  };
   return (
     <section id={COMPONENT_IDS.LARGEST_CITIES}>
       <div>
@@ -52,6 +56,14 @@ const LargestCities_ = ({
                   }}
                 >
                   Remove
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    addToFavorite(_city.city);
+                  }}
+                >
+                  Add to Favorite
                 </button>
               </div>
             ))}
@@ -84,6 +96,7 @@ const mapStateToProps = ({ largestCities }: RootStoreType) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     getLargestCities: () => dispatch(getLargestCities()),
+    addFavoriteCity: (city: string) => dispatch(addToFavoriteCity(city)),
   };
 };
 
