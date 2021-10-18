@@ -1,13 +1,16 @@
 /**
  *
  * @description Largest Cities component
- * TODO: Persist clearing on refresh
  */
 
 import { COMPONENT_IDS } from "../../constants";
 import { connect, ConnectedProps } from "react-redux";
-import { useEffect, useState } from "react";
-import { addToFavoriteCity, getLargestCities } from "../../store";
+import { useEffect } from "react";
+import {
+  addToFavoriteCity,
+  getLargestCities,
+  removeCityFromLargest,
+} from "../../store";
 import { RootStoreType } from "../../store/types";
 import { sortObjectArrayAlphabetically } from "../../helpers";
 
@@ -15,25 +18,18 @@ const LargestCities_ = ({
   largestCities,
   getLargestCities,
   addFavoriteCity,
+  removeCityFromLargest,
 }: PropsFromRedux) => {
-  const [cities, setCities] = useState<any>([]);
-
   useEffect(() => {
-    if (largestCities.length === 0) {
-      getLargestCities();
-    }
-  }, [largestCities.length, getLargestCities]);
-
-  useEffect(() => {
-    setCities(largestCities);
-  }, [largestCities]);
+    getLargestCities();
+  }, [getLargestCities]);
 
   const removeCity = (city: string) => {
-    setCities(cities.filter((_city: any) => _city.city !== city));
+    removeCityFromLargest(city);
   };
 
   const restore = () => {
-    setCities(largestCities);
+    getLargestCities(true);
   };
 
   const addToFavorite = (city: string) => {
@@ -43,9 +39,9 @@ const LargestCities_ = ({
     <section id={COMPONENT_IDS.LARGEST_CITIES}>
       <div>
         <h2>Largest Cities</h2>
-        {cities.length > 0 ? (
+        {largestCities.length > 0 ? (
           <>
-            {cities.map((_city: any) => (
+            {largestCities.map((_city: any) => (
               <div key={_city.city}>
                 <p>{_city.city}</p>
                 <p>{_city.weatherInformation.current.temperature} °C</p>
@@ -95,8 +91,11 @@ const mapStateToProps = ({ largestCities }: RootStoreType) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    getLargestCities: () => dispatch(getLargestCities()),
+    getLargestCities: (forceUpdate?: boolean) =>
+      dispatch(getLargestCities(forceUpdate)),
     addFavoriteCity: (city: string) => dispatch(addToFavoriteCity(city)),
+    removeCityFromLargest: (city: string) =>
+      dispatch(removeCityFromLargest(city)),
   };
 };
 

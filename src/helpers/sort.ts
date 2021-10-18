@@ -21,7 +21,5 @@ export const sortObjectArrayAlphabetically = (
  * @returns
  */
 export const sortArrayAlphabetically = (cities: string[]) => {
-  console.log(cities);
-
   return cities.sort((a, b) => a.localeCompare(b));
 };

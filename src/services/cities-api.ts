@@ -38,6 +38,18 @@ const getCitiesAndPopulation = async () => {
   }
 };
 
+/**
+ *
+ * @param city
+ * @returns an array that includes @param city
+ */
+const queryCities = async (city: string) => {
+  return cities.filter((_city) =>
+    JSON.stringify(_city).toLowerCase().includes(city.toLowerCase())
+  );
+};
+
 export const citiesAPI = {
   getCitiesAndPopulation,
+  queryCities,
 };

@@ -1,18 +1,28 @@
-import { StoreDispatch } from "..";
+/**
+ * Manage Cities Actions
+ */
+
+import { StoreDispatch, StoreState } from "..";
 import { getCities, storeCities } from "../../database";
 import { citiesAPI, weatherStack } from "../../services";
 import { ActionTypes } from "../types";
 
-export const getLargestCities = () => {
+/**
+ *
+ * @param forceUpdate set true to skip using saved data
+ */
+export const getLargestCities = (forceUpdate = false) => {
   return async (dispatch: StoreDispatch) => {
     try {
-      const citiesFromStore = await getCities();
-      if (citiesFromStore) {
-        dispatch({
-          type: ActionTypes.UPDATE_LARGEST_CITIES,
-          data: { cities: citiesFromStore },
-        });
-        return "";
+      if (!forceUpdate) {
+        const citiesFromStore = await getCities();
+        if (citiesFromStore) {
+          dispatch({
+            type: ActionTypes.UPDATE_LARGEST_CITIES,
+            data: { cities: citiesFromStore },
+          });
+          return "";
+        }
       }
       const cities = await citiesAPI.getCitiesAndPopulation();
 
@@ -46,6 +56,24 @@ export const getLargestCities = () => {
       dispatch({
         type: ActionTypes.UPDATE_LARGEST_CITIES,
         data: { cities: weatherInformationToCity },
+      });
+    } catch (error: any) {
+      console.log(error.message);
+    } finally {
+    }
+  };
+};
+
+export const removeCityFromLargest = (city: string) => {
+  return async (dispatch: StoreDispatch, getState: StoreState) => {
+    try {
+      const cities = getState().largestCities.cities.filter(
+        (_city) => _city.city !== city
+      );
+      await storeCities(cities);
+      dispatch({
+        type: ActionTypes.UPDATE_LARGEST_CITIES,
+        data: { cities },
       });
     } catch (error: any) {
       console.log(error.message);
