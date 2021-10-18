@@ -7,6 +7,14 @@
  * TODO: Display add to favorite cities button
  */
 
+import { COMPONENT_IDS } from "../../constants";
+
 export const LargestCities = () => {
-  return <h1>Largest Cities</h1>;
+  return (
+    <section id={COMPONENT_IDS.LARGEST_CITIES}>
+      <div>
+        <h2>Largest Cities</h2>
+      </div>
+    </section>
+  );
 };

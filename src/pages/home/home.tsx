@@ -11,12 +11,11 @@ import {
 
 export const Home = () => {
   return (
-    <main>
-      <h1>Home</h1>
-      <FavoriteCities />
+    <>
       <SearchCities />
+      <FavoriteCities />
       <LargestCities />
       <UserLocation />
-    </main>
+    </>
   );
 };

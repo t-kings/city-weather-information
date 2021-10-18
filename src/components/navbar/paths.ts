@@ -5,6 +5,10 @@ import { COMPONENT_IDS } from "../../constants";
 
 export const paths = [
   {
+    title: "Home",
+    path: `/`,
+  },
+  {
     title: "Favorite Cities",
     path: `/#${COMPONENT_IDS.FAVORITE_CITIES}`,
   },
