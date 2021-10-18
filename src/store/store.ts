@@ -1,5 +1,7 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
+import { rootReducer } from "./reducers";
 
-const rootReducer = combineReducers({});
 export const store = createStore(rootReducer, applyMiddleware(thunk));
+export type StoreState = typeof store.getState;
+export type StoreDispatch = typeof store.dispatch;
