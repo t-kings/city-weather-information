@@ -10,6 +10,7 @@ import { getFavoriteCities, removeCityFromFavorite } from "../../store";
 import { RootStoreType } from "../../store/types";
 import { COMPONENT_IDS } from "../../constants";
 import { Link } from "react-router-dom";
+import Styles from "./style.module.css";
 
 const FavoriteCities_ = ({
   favoriteCities,
@@ -27,7 +28,7 @@ const FavoriteCities_ = ({
   };
 
   return (
-    <section id={COMPONENT_IDS.FAVORITE_CITIES}>
+    <section className={Styles.section} id={COMPONENT_IDS.FAVORITE_CITIES}>
       <div>
         <h2>Favorite Cities</h2>
         {favoriteCities.length > 0 ? (

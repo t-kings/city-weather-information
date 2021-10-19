@@ -1,0 +1,5 @@
+.section>div {
+    max-width: var(--pageWidth);
+    padding: 50px var(--pagePaddingHorizontal);
+    margin: 0 auto;
+}

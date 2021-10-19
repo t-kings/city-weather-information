@@ -8,13 +8,28 @@ import {
   SearchCities,
   UserLocation,
 } from "../../components";
+import Styles from "./style.module.css";
 
 export const Home = () => {
   return (
     <>
-      <SearchCities />
+      <header className={Styles.header}>
+        <div>
+          <div className={Styles.search}>
+            <h1>
+              Get weather update of your favorite cities with a simple search
+            </h1>
+            <SearchCities />
+          </div>
+          <div className={Styles.largest}>
+            <div>
+              <h1>Weather update of the top largest cities</h1>
+              <LargestCities />
+            </div>
+          </div>
+        </div>
+      </header>
       <FavoriteCities />
-      <LargestCities />
       <UserLocation />
     </>
   );

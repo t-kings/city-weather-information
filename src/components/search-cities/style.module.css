@@ -1,0 +1,52 @@
+.section form {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.result {
+    padding: 20px;
+}
+
+.empty {
+    font-size: 14px;
+    text-align: center;
+}
+
+.empty span {
+    font-weight: bold;
+}
+
+.resultTitle {
+    text-align: center;
+    font-weight: normal;
+    font-size: 16px;
+}
+
+.resultTitle span {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.resultList ul {
+    margin-top: 20px;
+}
+
+.resultList li {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px dotted grey;
+    justify-content: space-between;
+}
+
+.resultList li div {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+}
+
+.heart {
+    margin-right: 5px;
+    display: block;
+}
