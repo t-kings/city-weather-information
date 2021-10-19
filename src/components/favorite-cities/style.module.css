@@ -1,5 +1,39 @@
-.section>div {
-    max-width: var(--pageWidth);
-    padding: 50px var(--pagePaddingHorizontal);
-    margin: 0 auto;
+.empty {
+    font-size: 14px;
+    text-align: center;
+}
+
+.empty p {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.empty a {
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.resultList ul {
+    margin-top: 20px;
+}
+
+.resultList li {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px dotted grey;
+    justify-content: space-between;
+}
+
+.resultList li div {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+}
+
+.heart {
+    margin-right: 5px;
+    display: block;
 }

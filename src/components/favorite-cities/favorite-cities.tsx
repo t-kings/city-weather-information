@@ -11,6 +11,7 @@ import { RootStoreType } from "../../store/types";
 import { COMPONENT_IDS } from "../../constants";
 import { Link } from "react-router-dom";
 import Styles from "./style.module.css";
+import { Heart } from "../../assets";
 
 const FavoriteCities_ = ({
   favoriteCities,
@@ -30,30 +31,34 @@ const FavoriteCities_ = ({
   return (
     <section className={Styles.section} id={COMPONENT_IDS.FAVORITE_CITIES}>
       <div>
-        <h2>Favorite Cities</h2>
         {favoriteCities.length > 0 ? (
-          <>
-            {favoriteCities.map((_city: string) => (
-              <div key={_city}>
-                <p>{_city}</p>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    removeCity(_city);
-                  }}
-                >
-                  Remove
-                </button>
-              </div>
-            ))}
-          </>
+          <div className={Styles.resultList}>
+            <ul>
+              {favoriteCities.map((_city: string) => (
+                <li key={_city}>
+                  <div>
+                    <Heart
+                      onClick={(e: any) => {
+                        e.preventDefault();
+                        removeCity(_city);
+                      }}
+                      className={Styles.heart}
+                      isOutline={false}
+                    />
+                    <p>{_city}</p>
+                  </div>
+                  <Link to={`/weather-information/${_city}`}>See Weather</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         ) : (
-          <>
-            <p>You have cleared out this list</p>
+          <div className={Styles.empty}>
+            <p>You have no favorite city</p>
             <Link to={`/#${COMPONENT_IDS.SEARCH_CITIES}`}>
               Search for Cities
             </Link>
-          </>
+          </div>
         )}
       </div>
     </section>

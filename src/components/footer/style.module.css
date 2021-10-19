@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: space-between;
     flex-flow: row wrap;
-    padding: 50px var(--pagePaddingHorizontal);
+    padding: 20px var(--pagePaddingHorizontal);
     max-width: var(--pageWidth);
     position: relative;
     margin: 0 auto;

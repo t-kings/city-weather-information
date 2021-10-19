@@ -29,8 +29,20 @@ export const Home = () => {
           </div>
         </div>
       </header>
-      <FavoriteCities />
-      <UserLocation />
+      <section className={Styles.section}>
+        <div>
+          <div className={Styles.favorite}>
+            <h1>Your favorite cities</h1>
+            <div>
+              <FavoriteCities />
+            </div>
+          </div>
+
+          <div className={Styles.userLocation}>
+            <UserLocation />
+          </div>
+        </div>
+      </section>
     </>
   );
 };

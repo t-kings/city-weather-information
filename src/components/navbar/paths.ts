@@ -9,13 +9,13 @@ export const paths = [
     path: `/`,
   },
   {
-    title: "Favorite Cities",
+    title: "Favorites",
     path: `/#${COMPONENT_IDS.FAVORITE_CITIES}`,
   },
-  { title: "Largest Cities", path: `/#${COMPONENT_IDS.LARGEST_CITIES}` },
+  // { title: "Largest Cities", path: `/#${COMPONENT_IDS.LARGEST_CITIES}` },
   {
-    title: "Search Cities",
+    title: "Search",
     path: `/#${COMPONENT_IDS.SEARCH_CITIES}`,
   },
-  { title: "User Location", path: "/user-location" },
+  { title: "User Location", path: `/#${COMPONENT_IDS.USER_LOCATION}` },
 ];
