@@ -3,7 +3,7 @@ import React, { FC, useRef } from "react";
 export const Heart: FC<any> = (props) => {
   const ref = useRef<any>(null);
   const pathRef = useRef<any>(null);
-  const { isOutline, onClick } = props;
+  const { isOutline, onClick, style, className } = props;
   return (
     <svg
       width="24"
@@ -20,7 +20,9 @@ export const Heart: FC<any> = (props) => {
       }}
       style={{
         cursor: "pointer",
+        ...style,
       }}
+      className={className}
       onClick={onClick}
     >
       <path

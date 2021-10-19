@@ -1,0 +1,45 @@
+.empty {
+    font-size: 14px;
+    text-align: center;
+    color: white;
+}
+
+.empty p {
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.resultList li {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px dotted grey;
+    justify-content: space-between;
+    color: white;
+}
+
+.resultList li div {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+}
+
+.resultList a {
+    color: white;
+    text-decoration: underline;
+}
+
+.heart {
+    margin-right: 5px;
+    display: block;
+}
+
+.temperature {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.temperature p {
+    font-size: 20px;
+}

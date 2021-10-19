@@ -6,19 +6,26 @@
 import { COMPONENT_IDS } from "../../constants";
 import { connect, ConnectedProps } from "react-redux";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   addToFavoriteCity,
   getLargestCities,
   removeCityFromLargest,
+  removeCityFromFavorite,
 } from "../../store";
 import { RootStoreType } from "../../store/types";
 import { sortObjectArrayAlphabetically } from "../../helpers";
+import Styles from "./style.module.css";
+import { Heart } from "../../assets/";
+import { Button } from "..";
 
 const LargestCities_ = ({
   largestCities,
   getLargestCities,
   addFavoriteCity,
   removeCityFromLargest,
+  removeCityFromFavorite,
+  favoriteCities,
 }: PropsFromRedux) => {
   useEffect(() => {
     getLargestCities();
@@ -32,60 +39,94 @@ const LargestCities_ = ({
     getLargestCities(true);
   };
 
-  const addToFavorite = (city: string) => {
-    addFavoriteCity(city);
+  const isCityAFavorite = (city: string) => {
+    try {
+      const _city = favoriteCities.find((_city) => _city === city);
+
+      if (_city) {
+        return true;
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    } finally {
+    }
   };
+
+  /**
+   *
+   * @param city
+   * *  Toggle favorite
+   * TODO: toast result
+   */
+  const handleFavorite = (city: string) => {
+    if (isCityAFavorite(city)) {
+      removeCityFromFavorite(city);
+    } else {
+      addFavoriteCity(city);
+    }
+  };
+
   return (
-    <section id={COMPONENT_IDS.LARGEST_CITIES}>
-      <div>
-        <h2>Largest Cities</h2>
-        {largestCities.length > 0 ? (
-          <>
-            {largestCities.map((_city: any) => (
-              <div key={_city.city}>
-                <p>{_city.city}</p>
-                <p>{_city.weatherInformation.current.temperature} °C</p>
-                <button
+    <section className={Styles.section} id={COMPONENT_IDS.LARGEST_CITIES}>
+      {largestCities.length > 0 ? (
+        <ul className={Styles.resultList}>
+          {largestCities.map((_city: any) => (
+            <li key={_city.city}>
+              <div>
+                <Heart
+                  onClick={(e: any) => {
+                    e.preventDefault();
+                    handleFavorite(_city.city);
+                  }}
+                  className={Styles.heart}
+                  isOutline={!isCityAFavorite(_city.city)}
+                />
+                <Link to={`/weather-information/${_city.city}`}>
+                  {_city.city}, {_city.country}
+                </Link>
+              </div>
+              <div>
+                <div className={Styles.temperature}>
+                  <p>{_city.weatherInformation.current.temperature} °C</p>
+                </div>
+                <Button
                   onClick={(e) => {
                     e.preventDefault();
                     removeCity(_city.city);
                   }}
-                >
-                  Remove
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    addToFavorite(_city.city);
+                  style={{
+                    background: "red",
                   }}
                 >
-                  Add to Favorite
-                </button>
+                  Hide
+                </Button>
               </div>
-            ))}
-          </>
-        ) : (
-          <>
-            <p>You have cleared out this list</p>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                restore();
-              }}
-            >
-              Restore
-            </button>
-          </>
-        )}
-      </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className={Styles.empty}>
+          <p>You have cleared out this list</p>
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              restore();
+            }}
+          >
+            Restore
+          </Button>
+        </div>
+      )}
     </section>
   );
 };
 
-const mapStateToProps = ({ largestCities }: RootStoreType) => {
+const mapStateToProps = ({ largestCities, favoriteCities }: RootStoreType) => {
   return {
     // sort cities alphabetically
     largestCities: sortObjectArrayAlphabetically(largestCities.cities, "city"),
+
+    favoriteCities: favoriteCities.cities,
   };
 };
 
@@ -96,6 +137,8 @@ const mapDispatchToProps = (dispatch: any) => {
     addFavoriteCity: (city: string) => dispatch(addToFavoriteCity(city)),
     removeCityFromLargest: (city: string) =>
       dispatch(removeCityFromLargest(city)),
+    removeCityFromFavorite: (city: string) =>
+      dispatch(removeCityFromFavorite(city)),
   };
 };
 

@@ -22,8 +22,8 @@ export const Home = () => {
             <SearchCities />
           </div>
           <div className={Styles.largest}>
+            {/* <h1>Weather update of the top largest cities</h1> */}
             <div>
-              <h1>Weather update of the top largest cities</h1>
               <LargestCities />
             </div>
           </div>

@@ -37,7 +37,7 @@ export const Navbar = () => {
 
     window.addEventListener("scroll", () => {
       if (nav) {
-        nav.style.background = window.scrollY > 200 ? "rgb(32, 0, 34)" : "none";
+        nav.style.background = window.scrollY > 100 ? "rgb(32, 0, 34)" : "none";
       }
     });
 

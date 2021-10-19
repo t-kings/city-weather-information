@@ -26,11 +26,12 @@ export const getLargestCities = (forceUpdate = false) => {
       }
       const cities = await citiesAPI.getCitiesAndPopulation();
 
-      const sortedCitiesByPopulation = cities.sort(
-        (city, _city) => city.population - _city.population
-      );
+      const sortedCitiesByPopulation = cities
+        .filter((_city) => _city.population > 0)
+        .sort((city, _city) => city.population - _city.population);
 
       const largestByPopulation = sortedCitiesByPopulation.slice(0, 15);
+
 
       /**
        * * We cannot make bulk queries with free account so we need to loop
@@ -41,6 +42,7 @@ export const getLargestCities = (forceUpdate = false) => {
 
       for (let index = 0; index < largestByPopulation.length; index++) {
         const _city = largestByPopulation[index];
+
         const data = await weatherStack.getWeatherInformation(_city.city);
 
         weatherInformationToCity.push({
