@@ -2,7 +2,8 @@
  * Error Boundary to handle uncaught errors
  */
 import { Component, ErrorInfo, ReactNode } from "react";
-
+import { Link } from "react-router-dom";
+import Styles from "./style.module.css";
 interface Props {
   children: ReactNode;
 }
@@ -26,7 +27,12 @@ export class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      return <h1>Something went wrong.</h1>;
+      return (
+        <section className={Styles.error}>
+          <h1>Something went wrong.</h1>
+          <Link to="/">Go Home</Link>
+        </section>
+      );
     }
 
     return this.props.children;

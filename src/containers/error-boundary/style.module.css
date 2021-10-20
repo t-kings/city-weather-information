@@ -1,0 +1,19 @@
+.error {
+    min-height: 100vh;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.error h1 {
+    text-align: 16px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.error a {
+    display: inline-block;
+    font-weight: bold;
+    text-decoration: underline;
+}

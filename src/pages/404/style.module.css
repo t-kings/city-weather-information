@@ -1,0 +1,23 @@
+.notFound {
+    min-height: 100vh;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    background: black;
+}
+
+.notFound h1 {
+    text-align: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.notFound a {
+    display: inline-block;
+    font-weight: bold;
+    text-decoration: underline;
+    color: white;
+    font-size: 20px;
+}
