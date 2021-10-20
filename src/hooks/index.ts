@@ -1,1 +1,1 @@
-export * from "./useFavoriteCities";
+export * from "./useUserLocation";

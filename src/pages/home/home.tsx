@@ -11,6 +11,8 @@ import {
 import Styles from "./style.module.css";
 import { useEffect } from "react";
 import { config } from "../../config";
+import { Link } from "react-router-dom";
+import { COMPONENT_IDS } from "../../constants";
 
 export const Home = () => {
   /**
@@ -39,15 +41,22 @@ export const Home = () => {
       </header>
       <section className={Styles.section}>
         <div>
+          <div className={Styles.userLocation}>
+            <p>
+              This is how your city is today <br />
+              <br />
+              Not your city?{" "}
+              <Link to={`#${COMPONENT_IDS.SEARCH_CITIES}`}>
+                Search for your city
+              </Link>
+            </p>
+            <UserLocation />
+          </div>
           <div className={Styles.favorite}>
             <h1>Your favorite cities</h1>
             <div>
               <FavoriteCities />
             </div>
-          </div>
-
-          <div className={Styles.userLocation}>
-            <UserLocation />
           </div>
         </div>
       </section>
