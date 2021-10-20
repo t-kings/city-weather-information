@@ -30,7 +30,7 @@
 .largest {
     display: flex;
     flex-flow: column nowrap;
-    align-items: center;
+    align-items: stretch;
     width: 50%;
 }
 

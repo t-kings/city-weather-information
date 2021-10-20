@@ -17,5 +17,5 @@ export const paths = [
     title: "Search",
     path: `/#${COMPONENT_IDS.SEARCH_CITIES}`,
   },
-  { title: "User Location", path: `/#${COMPONENT_IDS.USER_LOCATION}` },
+  { title: "Location", path: `/#${COMPONENT_IDS.USER_LOCATION}` },
 ];

@@ -1,3 +1,4 @@
+import cogoToast from "cogo-toast";
 import { StoreDispatch, StoreState } from "..";
 import { findFavoriteCities, storeFavoriteCities } from "../../database";
 import { ActionTypes } from "../types";
@@ -24,7 +25,6 @@ export const addToFavoriteCity = (city: string) => {
   return async (dispatch: StoreDispatch, getState: StoreState) => {
     try {
       // Concatenate city to city in state
-
       const cities = Array.from(
         new Set([...getState().favoriteCities.cities, city])
       );
@@ -34,8 +34,9 @@ export const addToFavoriteCity = (city: string) => {
         type: ActionTypes.UPDATE_FAVORITE_CITIES,
         data: { cities },
       });
+      cogoToast.success(city + " added to favorites");
     } catch (error: any) {
-      console.log(error.message);
+      cogoToast.error(error.message);
     } finally {
     }
   };
@@ -52,8 +53,9 @@ export const removeCityFromFavorite = (city: string) => {
         type: ActionTypes.UPDATE_FAVORITE_CITIES,
         data: { cities },
       });
+      cogoToast.success(city + " removed from favorites");
     } catch (error: any) {
-      console.log(error.message);
+      cogoToast.error(error.message);
     } finally {
     }
   };

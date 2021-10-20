@@ -18,6 +18,16 @@ export const UserLocation = () => {
       <p>{body}</p>
     </li>
   );
+
+  if (!location) {
+    return (
+      <section id={COMPONENT_IDS.USER_LOCATION} className={Styles.section}>
+        <div className={Styles.description}>
+          <p>Location permission is not granted or mot supported by browser</p>
+        </div>
+      </section>
+    );
+  }
   return (
     <section id={COMPONENT_IDS.USER_LOCATION} className={Styles.section}>
       <h3 className={Styles.title}>

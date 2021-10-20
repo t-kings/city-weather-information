@@ -2,6 +2,7 @@
  * Manage Cities Actions
  */
 
+import cogoToast from "cogo-toast";
 import { StoreDispatch, StoreState } from "..";
 import { getCities, storeCities } from "../../database";
 import { citiesAPI, weatherStack } from "../../services";
@@ -31,7 +32,6 @@ export const getLargestCities = (forceUpdate = false) => {
         .sort((city, _city) => city.population - _city.population);
 
       const largestByPopulation = sortedCitiesByPopulation.slice(0, 15);
-
 
       /**
        * * We cannot make bulk queries with free account so we need to loop
@@ -77,8 +77,9 @@ export const removeCityFromLargest = (city: string) => {
         type: ActionTypes.UPDATE_LARGEST_CITIES,
         data: { cities },
       });
+      cogoToast.success(city + " removed");
     } catch (error: any) {
-      console.log(error.message);
+      cogoToast.error(error.message);
     } finally {
     }
   };

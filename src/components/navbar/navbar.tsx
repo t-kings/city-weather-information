@@ -7,9 +7,12 @@ import { config } from "../../config";
 import { paths } from "./paths";
 import Styles from "./style.module.css";
 import { useState, useEffect } from "react";
+import { useUserLocation } from "../../hooks";
+import { COMPONENT_IDS } from "../../constants";
 
 export const Navbar = () => {
   const [isChecked, setIsChecked] = useState(false);
+  const location = useUserLocation();
 
   const toggleNavbar = () => {
     setIsChecked(!isChecked);
@@ -48,15 +51,25 @@ export const Navbar = () => {
   return (
     <nav className={Styles.nav} id="navbar">
       <div>
-        <Link to="/" className={Styles.title}>
+        <Link to="/" onClick={toggleNavbar} className={Styles.title}>
           {config.appName}
         </Link>
         <ul className={Styles.links} id="navbar-links">
-          {paths.map((_path) => (
-            <li key={_path.title}>
-              <Link to={_path.path}>{_path.title}</Link>
-            </li>
-          ))}
+          {paths.map(
+            /**
+             * * hide user location if location is false
+             */
+            (_path) =>
+              !(
+                _path.path.includes(COMPONENT_IDS.USER_LOCATION) && !location
+              ) && (
+                <li key={_path.title}>
+                  <Link onClick={toggleNavbar} to={_path.path}>
+                    {_path.title}
+                  </Link>
+                </li>
+              )
+          )}
         </ul>
         <div className={Styles.toggle}>
           <input type="checkbox" checked={isChecked} onChange={toggleNavbar} />

@@ -11,6 +11,7 @@ import { Modal } from "../../containers";
 import Styles from "./style.module.css";
 import { Button, Textarea } from "..";
 import { formatDate } from "../../helpers";
+import cogoToast from "cogo-toast";
 
 export const Notes = ({ city }: CityPageParams) => {
   const [notes, setNotes] = useState<NoteType[]>([]);
@@ -59,7 +60,9 @@ export const Notes = ({ city }: CityPageParams) => {
       await addToNote(city, noteText);
       fetchNotes();
       setToAdd(false);
-    } catch (error) {
+      cogoToast.success("Note saved");
+    } catch (error: any) {
+      cogoToast.error(error.message);
     } finally {
       setIsSaving(false);
     }
@@ -75,7 +78,9 @@ export const Notes = ({ city }: CityPageParams) => {
       setModifyId("");
       setToDelete(false);
       fetchNotes();
-    } catch (error) {
+      cogoToast.success("Note deleted");
+    } catch (error: any) {
+      cogoToast.error(error.message);
     } finally {
       setIsDeleting(false);
     }
@@ -89,7 +94,10 @@ export const Notes = ({ city }: CityPageParams) => {
       setIsEditing(true);
       await updateNote(parseInt(modifyId), editNote);
       fetchNotes();
-    } catch (error) {
+      setModifyId("");
+      cogoToast.success("Note edited");
+    } catch (error: any) {
+      cogoToast.error(error.message);
     } finally {
       setIsEditing(false);
     }
