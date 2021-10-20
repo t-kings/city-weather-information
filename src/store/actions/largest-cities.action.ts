@@ -15,9 +15,13 @@ import { ActionTypes } from "../types";
 export const getLargestCities = (forceUpdate = false) => {
   return async (dispatch: StoreDispatch) => {
     try {
+      dispatch({
+        type: ActionTypes.UPDATE_LARGEST_CITIES,
+        data: { isLoading: true },
+      });
       if (!forceUpdate) {
         const citiesFromStore = await getCities();
-        if (citiesFromStore) {
+        if (citiesFromStore.length > 0) {
           dispatch({
             type: ActionTypes.UPDATE_LARGEST_CITIES,
             data: { cities: citiesFromStore },
@@ -62,6 +66,10 @@ export const getLargestCities = (forceUpdate = false) => {
     } catch (error: any) {
       console.log(error.message);
     } finally {
+      dispatch({
+        type: ActionTypes.UPDATE_LARGEST_CITIES,
+        data: { isLoading: false },
+      });
     }
   };
 };

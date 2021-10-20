@@ -9,3 +9,4 @@ export * from "./input";
 export * from "./city-weather-information";
 export * from "./button";
 export * from "./text-area";
+export * from "./loader";

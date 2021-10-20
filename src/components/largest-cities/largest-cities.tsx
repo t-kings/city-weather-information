@@ -17,7 +17,7 @@ import { RootStoreType } from "../../store/types";
 import { sortObjectArrayAlphabetically } from "../../helpers";
 import Styles from "./style.module.css";
 import { Heart } from "../../assets/";
-import { Button } from "..";
+import { Button, Loader } from "..";
 
 const LargestCities_ = ({
   largestCities,
@@ -26,6 +26,7 @@ const LargestCities_ = ({
   removeCityFromLargest,
   removeCityFromFavorite,
   favoriteCities,
+  isLoading,
 }: PropsFromRedux) => {
   useEffect(() => {
     getLargestCities();
@@ -36,7 +37,7 @@ const LargestCities_ = ({
   };
 
   const restore = () => {
-    getLargestCities(true);
+    getLargestCities();
   };
 
   const isCityAFavorite = (city: string) => {
@@ -46,8 +47,11 @@ const LargestCities_ = ({
       if (_city) {
         return true;
       }
+
+      return false;
     } catch (error: any) {
       console.log(error.message);
+      return false;
     } finally {
     }
   };
@@ -65,6 +69,10 @@ const LargestCities_ = ({
       addFavoriteCity(city);
     }
   };
+
+  if (isLoading) {
+    return <Loader isLoading />;
+  }
 
   return (
     <section className={Styles.section} id={COMPONENT_IDS.LARGEST_CITIES}>
@@ -125,7 +133,7 @@ const mapStateToProps = ({ largestCities, favoriteCities }: RootStoreType) => {
   return {
     // sort cities alphabetically
     largestCities: sortObjectArrayAlphabetically(largestCities.cities, "city"),
-
+    isLoading: largestCities.isLoading,
     favoriteCities: favoriteCities.cities,
   };
 };

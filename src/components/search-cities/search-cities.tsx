@@ -14,6 +14,7 @@ import Styles from "./style.module.css";
 import { cities } from "../../database";
 import { Heart } from "../../assets/";
 import { RootStoreType } from "../../store/types";
+import { COMPONENT_IDS } from "../../constants";
 
 const SearchCities_ = ({
   addFavoriteCity,
@@ -76,14 +77,16 @@ const SearchCities_ = ({
       if (_city) {
         return true;
       }
+      return false;
     } catch (error: any) {
       console.log(error.message);
+      return false;
     } finally {
     }
   };
 
   return (
-    <section className={Styles.section}>
+    <section id={COMPONENT_IDS.SEARCH_CITIES} className={Styles.section}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -132,7 +135,7 @@ const SearchCities_ = ({
                           handleFavorite(_filteredCity.city);
                         }}
                         className={Styles.heart}
-                        isOutline={isCityAFavorite(_filteredCity.city)}
+                        isOutline={!isCityAFavorite(_filteredCity.city)}
                       />
                       <p>
                         {_filteredCity.city}, {_filteredCity.country}
