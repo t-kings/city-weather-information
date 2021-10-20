@@ -3,71 +3,82 @@
  * @description manage Notes Actions
  */
 
+import { findNotes, storeNotes } from "../database";
 import { NoteType } from "../store/types";
 
 export const getNotes = async (city: string): Promise<NoteType[]> => {
   try {
-    // const favoriteCitiesFromStore = await findFavoriteCities();
-    // if (favoriteCitiesFromStore) {
-    //   dispatch({
-    //     type: ActionTypes.UPDATE_FAVORITE_CITIES,
-    //     data: { cities: favoriteCitiesFromStore },
-    //   });
-    //   return "";
-    // }
-    // return [];
+    const notes = await findNotes({ city });
+    return notes;
   } catch (error: any) {
     console.log(error.message);
-  } finally {
     return [];
+  } finally {
   }
 };
 
-export const addToNote = (city: string, note: string) => {
+export const addToNote = async (city: string, note: string) => {
   try {
-    // // Concatenate city to city in state
-    // const cities = Array.from(
-    //   new Set([...getState().favoriteCities.cities, city])
-    // );
-    // await storeFavoriteCities(cities);
-    // dispatch({
-    //   type: ActionTypes.UPDATE_FAVORITE_CITIES,
-    //   data: { cities },
-    // });
+    const notes = await findNotes();
+    const dateObj = new Date();
+    const updatedNotes: NoteType[] = [
+      ...notes,
+      {
+        note,
+        city,
+        id: notes.length + 1,
+        createdAt: dateObj.toISOString(),
+        updatedAt: dateObj.toISOString(),
+      },
+    ];
+
+    await storeNotes(updatedNotes);
+  } catch (error: any) {
+    console.log(error.message);
+  } finally {
+    return "";
+  }
+};
+
+export const removeNote = async (noteId: number) => {
+  try {
+    const notes = await findNotes();
+
+    const updatedNotes: NoteType[] = notes.filter(
+      (note: NoteType) => note.id !== noteId
+    );
+
+    await storeNotes(updatedNotes);
+    return true;
   } catch (error: any) {
     console.log(error.message);
   } finally {
   }
 };
 
-export const removeNote = (noteId: string) => {
+export const updateNote = async (noteId: number, _note: string) => {
   try {
-    // const cities = getState().favoriteCities.cities.filter(
-    //   (_city) => _city !== city
-    // );
-    // await storeFavoriteCities(cities);
-    // dispatch({
-    //   type: ActionTypes.UPDATE_FAVORITE_CITIES,
-    //   data: { cities },
-    // });
-  } catch (error: any) {
-    console.log(error.message);
-  } finally {
-  }
-};
+    const notes = await findNotes();
 
-export const updateNote = (noteId: string, note: string) => {
-  try {
-    // const cities = getState().favoriteCities.cities.filter(
-    //   (_city) => _city !== city
-    // );
-    // await storeFavoriteCities(cities);
-    // dispatch({
-    //   type: ActionTypes.UPDATE_FAVORITE_CITIES,
-    //   data: { cities },
-    // });
+    const dateObj = new Date();
+
+    const updatedNotes: NoteType[] = notes.map((note: NoteType) => {
+      if (note.id !== noteId) {
+        return note;
+      }
+
+      return {
+        ...note,
+        note: _note,
+        updatedAt: dateObj.toISOString(),
+      };
+    });
+
+    await storeNotes(updatedNotes);
+    return true;
   } catch (error: any) {
     console.log(error.message);
+    return false;
   } finally {
   }
 };

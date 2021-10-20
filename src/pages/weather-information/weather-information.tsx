@@ -44,6 +44,7 @@ export const WeatherInformation = () => {
           </div>
 
           <div className={Styles.userLocation}>
+            <h1>Notes </h1>
             <Notes city={city} />
           </div>
         </div>

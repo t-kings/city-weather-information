@@ -123,7 +123,7 @@
 }
 
 @media only screen and (max-width: 800px) {
-    .header>div {
+    .header>div, .section>div {
         display: block;
     }
     .search {
@@ -131,7 +131,16 @@
         margin-bottom: 50px;
         padding-right: 0;
     }
-    .largest {
+    .largest, .favorite {
         width: 100%;
+    }
+    .favorite>div {
+        max-height: none;
+    }
+    .userLocation {
+        margin-top: 50px;
+    }
+    .largest>div {
+        max-height: none;
     }
 }

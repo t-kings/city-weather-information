@@ -5,6 +5,7 @@
     border-bottom: 2px solid rgba(255, 255, 255, 0.544);
     background: none;
     outline: none;
+    display: block;
     color: white;
 }
 

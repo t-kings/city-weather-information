@@ -4,14 +4,17 @@
  */
 
 import { CityPageParams } from "../../types";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, FC } from "react";
 import { NoteType } from "../../store/types";
 import { addToNote, getNotes, removeNote, updateNote } from "../../services";
 import { Modal } from "../../containers";
+import Styles from "./style.module.css";
+import { Button, Textarea } from "..";
+import { formatDate } from "../../helpers";
 
 export const Notes = ({ city }: CityPageParams) => {
   const [notes, setNotes] = useState<NoteType[]>([]);
-  const [seeMoreId, setSeeMoreId] = useState("");
+  const [modifyId, setModifyId] = useState("");
   const [toAdd, setToAdd] = useState(false);
   const [noteText, setNoteText] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -30,7 +33,18 @@ export const Notes = ({ city }: CityPageParams) => {
     fetchNotes();
   }, [fetchNotes]);
 
-  const handleSeeMore = (id: string | number) => {};
+  /**
+   * * cancel editing when modify modal closes
+   */
+  useEffect(() => {
+    if (!modifyId) {
+      setToEdit(false);
+    }
+  }, [modifyId]);
+
+  const handleModifyId = (id: string | number) => {
+    setModifyId(id as string);
+  };
 
   const handleAdd = () => {
     setToAdd(true);
@@ -43,6 +57,8 @@ export const Notes = ({ city }: CityPageParams) => {
       }
       setIsSaving(true);
       await addToNote(city, noteText);
+      fetchNotes();
+      setToAdd(false);
     } catch (error) {
     } finally {
       setIsSaving(false);
@@ -55,7 +71,10 @@ export const Notes = ({ city }: CityPageParams) => {
         return "";
       }
       setIsDeleting(true);
-      await removeNote(seeMoreId);
+      await removeNote(parseInt(modifyId));
+      setModifyId("");
+      setToDelete(false);
+      fetchNotes();
     } catch (error) {
     } finally {
       setIsDeleting(false);
@@ -68,143 +87,261 @@ export const Notes = ({ city }: CityPageParams) => {
         return "";
       }
       setIsEditing(true);
-      await updateNote(seeMoreId, editNote);
+      await updateNote(parseInt(modifyId), editNote);
+      fetchNotes();
     } catch (error) {
     } finally {
       setIsEditing(false);
     }
   };
 
-  const seeMoreComponent = () => {
-    const _note = notes.find((_note) => _note.id.toString() === seeMoreId);
-    if (_note) {
-      return (
-        <div>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              setToEdit(true);
-            }}
-          >
-            Edit
-          </button>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              setToDelete(true);
-            }}
-          >
-            Delete
-          </button>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleEdit();
-            }}
-          >
-            <textarea
-              defaultValue={_note.note}
-              disabled={!toEdit}
-              onChange={(e) => {
-                setEditNote(e.target.value);
-              }}
-            />
-
-            {toEdit && <button>Save</button>}
-          </form>
-        </div>
-      );
-    }
-    return null;
-  };
-
-  const addNoteComponent = () => {
-    return (
-      <div>
-        <form onSubmit={handleAddNote}>
-          <textarea
-            onChange={(e) => {
-              setNoteText(e.target.value);
-            }}
-          />
-          <button>Save</button>
-        </form>
-      </div>
-    );
-  };
-
-  const deleteComponent = () => {
-    return (
-      <div>
-        <p>Are you sure you want to delete this note? This is irreversible</p>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            handleDeleteNote();
-          }}
-        >
-          Delete
-        </button>
-      </div>
-    );
-  };
-
   return (
-    <section>
+    <section className={Styles.section}>
       <div>
-        <h1>Notes for {city}</h1>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            handleAdd();
-          }}
-        >
-          Add
-        </button>
-        {notes.map((_note) => (
-          <div key={_note.id}>
-            <p>{_note.note.substr(0, 15)}</p>
-            <p>{_note.createdAt}</p>
-            <button
+        {notes.length !== 0 && (
+          <div className={Styles.add}>
+            <Button
               onClick={(e) => {
                 e.preventDefault();
-                handleSeeMore(_note.id);
+                handleAdd();
               }}
             >
-              See More
-            </button>
+              Add +
+            </Button>
           </div>
-        ))}
-        <form>
-          <textarea />
-        </form>
+        )}
+        {notes.length === 0 ? (
+          <div className={Styles.empty}>
+            <p>You have no notes for {city}</p>
+
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                handleAdd();
+              }}
+            >
+              Add Note
+            </Button>
+          </div>
+        ) : (
+          <div className={Styles.resultList}>
+            <ul>
+              {notes.map((_note) => (
+                <li key={_note.id}>
+                  <p className={Styles.title}>{_note.note.substr(0, 15)}</p>
+                  <div>
+                    <p className={Styles.date}>
+                      {formatDate(_note.createdAt, true)}
+                    </p>
+                    <Button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleModifyId(_note.id);
+                      }}
+                      style={{
+                        background: "black",
+                      }}
+                    >
+                      Modify
+                    </Button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
+
+      {/* Modify Note modal */}
       <Modal
-        showModal={!!seeMoreId}
+        showModal={!!modifyId}
         closeModal={() => {
-          setSeeMoreId("");
+          setModifyId("");
         }}
       >
-        {seeMoreComponent()}
+        <ModifyNoteComponent
+          notes={notes}
+          setToEdit={setToEdit}
+          modifyId={modifyId}
+          setToDelete={setToDelete}
+          handleEdit={handleEdit}
+          toEdit={toEdit}
+          setEditNote={setEditNote}
+        />
       </Modal>
 
+      {/* Add note modal */}
       <Modal
         showModal={toAdd}
         closeModal={() => {
           setToAdd(false);
         }}
       >
-        {addNoteComponent()}
+        <AddNoteComponent setNote={setNoteText} onSubmit={handleAddNote} />
       </Modal>
 
+      {/* Delete Note Modal */}
       <Modal
         showModal={toDelete}
         closeModal={() => {
           setToDelete(false);
         }}
       >
-        {deleteComponent()}
+        <DeleteComponent handleDeleteNote={handleDeleteNote} />
       </Modal>
     </section>
+  );
+};
+
+/**
+ *
+ * * Add note modal component
+ */
+const AddNoteComponent: FC<{ onSubmit: () => void; setNote: any }> = ({
+  onSubmit,
+  setNote,
+}) => {
+  return (
+    <div className={Styles.addNote}>
+      <form onSubmit={onSubmit}>
+        <Textarea
+          onChange={(e) => {
+            setNote(e.target.value);
+          }}
+          placeholder="Write note..."
+        />
+        <div className={Styles.add}>
+          <Button
+            style={{
+              marginTop: 20,
+            }}
+            onClick={onSubmit}
+          >
+            Save
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+/**
+ * * Modify Note modal component
+ */
+const ModifyNoteComponent: FC<{
+  notes: NoteType[];
+  setToEdit: any;
+  modifyId: string;
+  setToDelete: any;
+  handleEdit: () => void;
+  toEdit: any;
+  setEditNote: any;
+}> = ({
+  notes,
+  setToEdit,
+  modifyId,
+  setToDelete,
+  handleEdit,
+  toEdit,
+  setEditNote,
+}) => {
+  const _note = notes.find((_note) => _note.id === parseInt(modifyId));
+  if (_note) {
+    return (
+      <div className={Styles.addNote}>
+        <div className={Styles.add}>
+          {!toEdit && (
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                setToEdit(true);
+              }}
+            >
+              Edit
+            </Button>
+          )}
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              setToDelete(true);
+            }}
+            style={{
+              background: "red",
+              marginLeft: 10,
+            }}
+          >
+            Delete
+          </Button>
+        </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleEdit();
+          }}
+        >
+          <Textarea
+            defaultValue={_note.note}
+            disabled={!toEdit}
+            onChange={(e) => {
+              setEditNote(e.target.value);
+            }}
+            placeholder="Write note..."
+            style={{
+              marginTop: 20,
+              marginBottom: 20,
+              cursor: toEdit ? "text" : "not-allowed",
+            }}
+          />
+
+          {toEdit && (
+            <div
+              className={Styles.add}
+              onClick={(e) => {
+                e.preventDefault();
+                handleEdit();
+              }}
+            >
+              <Button>Save</Button>
+            </div>
+          )}
+        </form>
+      </div>
+    );
+  }
+  return null;
+};
+
+/**
+ *
+ * * Delete component modal
+ */
+const DeleteComponent: FC<{
+  handleDeleteNote: any;
+}> = ({ handleDeleteNote }) => {
+  return (
+    <div className={Styles.addNote}>
+      <p
+        style={{
+          textAlign: "center",
+          marginBottom: 20,
+        }}
+      >
+        Are you sure you want to delete this note?
+        <br /> This is irreversible
+      </p>
+      <div className={Styles.add}>
+        <Button
+          onClick={(e) => {
+            e.preventDefault();
+            handleDeleteNote();
+          }}
+          style={{
+            background: "red",
+          }}
+        >
+          Delete
+        </Button>
+      </div>
+    </div>
   );
 };

@@ -1,0 +1,17 @@
+.textarea {
+    width: 100%;
+    padding: 12px 20px;
+    border: none;
+    border: 1px solid gray;
+    background: none;
+    outline: none;
+    color: black;
+    display: block;
+    min-height: 200px;
+    border-radius: 3px;
+}
+
+.textarea {
+    font-weight: bold;
+    border: 1px solid black;
+}

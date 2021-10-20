@@ -1,12 +1,30 @@
+.add {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.addNote {
+    padding: 20px;
+}
+
 .empty {
     font-size: 14px;
     text-align: center;
-    color: white;
 }
 
 .empty p {
-    margin-bottom: 20px;
     font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.empty a {
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.resultList ul {
+    margin-top: 20px;
 }
 
 .resultList li {
@@ -16,7 +34,10 @@
     padding: 10px;
     border-bottom: 1px dotted grey;
     justify-content: space-between;
-    color: white;
+}
+
+.resultList li:hover {
+    background: rgba(128, 128, 128, 0.3);
 }
 
 .resultList li div {
@@ -25,31 +46,11 @@
     align-items: center;
 }
 
-.resultList a {
-    color: white;
-    text-decoration: underline;
-}
-
 .heart {
     margin-right: 5px;
     display: block;
 }
 
-.temperature {
+.date {
     margin-right: 10px;
-    font-weight: bold;
-}
-
-.temperature p {
-    font-size: 20px;
-}
-
-@media only screen and (max-width: 800px) {
-    .resultList li {
-        display: block;
-    }
-    .resultList li>* {
-        margin-bottom: 20px;
-        justify-content: space-between;
-    }
 }

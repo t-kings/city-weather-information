@@ -29,7 +29,9 @@ export const getCities = async () => {
       return JSON.parse(raw);
     }
 
-    return null;
+    // No cities, store empty
+    await storeCities([]);
+    return [];
   } catch (error) {
     throw error;
   }
