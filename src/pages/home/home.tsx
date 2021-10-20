@@ -9,8 +9,16 @@ import {
   UserLocation,
 } from "../../components";
 import Styles from "./style.module.css";
+import { useEffect } from "react";
+import { config } from "../../config";
 
 export const Home = () => {
+  /**
+   * Set page title
+   */
+  useEffect(() => {
+    document.title = config.appName;
+  }, []);
   return (
     <>
       <header className={Styles.header}>

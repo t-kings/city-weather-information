@@ -55,20 +55,18 @@ const SearchCities_ = ({
     setShowModal(false);
   };
 
-
-/**
- * 
- * @param city 
- * *  Toggle favorite 
- * TODO: toast result
- */
+  /**
+   *
+   * @param city
+   * *  Toggle favorite
+   * TODO: toast result
+   */
   const handleFavorite = (city: string) => {
     if (isCityAFavorite(city)) {
       removeCityFromFavorite(city);
     } else {
       addFavoriteCity(city);
     }
-
   };
 
   const isCityAFavorite = (city: string) => {
@@ -140,7 +138,10 @@ const SearchCities_ = ({
                         {_filteredCity.city}, {_filteredCity.country}
                       </p>
                     </div>
-                    <Link to={`/weather-information/${_filteredCity.city}`}>
+                    <Link
+                      to={`/weather-information/${_filteredCity.city}`}
+                      onClick={closeModal}
+                    >
                       See Weather
                     </Link>
                   </li>
