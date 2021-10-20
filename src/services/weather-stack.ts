@@ -5,6 +5,7 @@
 import axios from "axios";
 
 const key = "weatherStack-cities";
+const timeKey = "weatherStack-cities-time";
 
 /**
  *
@@ -123,6 +124,18 @@ export const getWeatherForecast = async (city: string, force = false) => {
  * @returns
  */
 const getStored = (city: string) => {
+  // * return null if stored is too late
+  const rawTime = localStorage.getItem(key);
+  if (rawTime) {
+    const time = JSON.parse(rawTime);
+    const now = new Date().getTime();
+    const expiryTime = 1000 * 60 * 60; // 1 hour
+    if (time[city] && now - time[city] > expiryTime) {
+      // expired
+      return null;
+    }
+  }
+
   const raw = localStorage.getItem(key);
   if (!raw) {
     return null;
@@ -140,15 +153,21 @@ const getStored = (city: string) => {
  *
  * @param city city to pair data with
  * @param data data to store
- * * this can be expanded by adding time of caching
  */
 const storeData = (city: string, data: any) => {
   const raw = localStorage.getItem(key);
+
   const cities = JSON.parse(raw ? raw : "{}");
 
   cities[city] = data;
 
   localStorage.setItem(key, JSON.stringify(cities));
+
+  //* this can be expanded by adding time of caching
+  const timeRaw = localStorage.getItem(timeKey);
+  const time = JSON.parse(timeRaw ? timeRaw : "{}");
+  time[city] = new Date().getTime();
+  localStorage.setItem(timeKey, JSON.stringify(time));
 };
 export const weatherStack = {
   getWeatherInformation,

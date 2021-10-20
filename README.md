@@ -29,8 +29,19 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## Learn More
+## Documentation & Architecture
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+ - `/src` contains the project files
+ - `/src/assets` contains assets like icons
+ - `/src/components/` contains well defined components to seperate logic
+ - `/src/constants` contains constant variables across the app
+ - `/src/containers` contains layouts and error boundary'
+ - `/src/database` contains mocked database using localStorage
+ - `/src/helpers` contains arbitrary helper functions
+ - `/src/hooks` contains custom hooks
+ - `/src/pages` contains pages and their ui structures
+ - `/src/routes` contains route files
+ - `/src/services` contains network api calls and mocked network api calls(mocked calls are made here to help in scaling in case of switching to real network calls)
+ - `/src/store` contains redux configuration, actions and reducers
+ - `/src/types` contains typescript arbitrary types
+ - `/src/config` the configuration file for the project

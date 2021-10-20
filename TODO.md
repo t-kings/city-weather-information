@@ -1,4 +1,1 @@
 - Include unit testing for applicable functionality.
-- Include screenshots and documentation in a README.md file.
-- Add Toast
-- Add animation
