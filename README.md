@@ -2,6 +2,9 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
 
+## Environment
+Add a  `.env` file and update `REACT_APP_WEATHER_STACK_KEY` as seen in `.env.sample`
+
 ## Available Scripts
 
 In the project directory, you can run:
