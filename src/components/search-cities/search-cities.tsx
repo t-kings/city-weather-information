@@ -60,7 +60,6 @@ const SearchCities_ = ({
    *
    * @param city
    * *  Toggle favorite
-   * TODO: toast result
    */
   const handleFavorite = (city: string) => {
     if (isCityAFavorite(city)) {
@@ -79,7 +78,6 @@ const SearchCities_ = ({
       }
       return false;
     } catch (error: any) {
-      console.log(error.message);
       return false;
     } finally {
     }

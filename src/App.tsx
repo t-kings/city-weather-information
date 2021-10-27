@@ -1,11 +1,14 @@
+import { BrowserRouter } from "react-router-dom";
 import { ErrorBoundary } from "./containers";
 import { PageRoutes } from "./routes";
 
 function App() {
   return (
-    <ErrorBoundary>
-      <PageRoutes />
-    </ErrorBoundary>
+    <BrowserRouter>
+      <ErrorBoundary>
+        <PageRoutes />
+      </ErrorBoundary>
+    </BrowserRouter>
   );
 }
 
